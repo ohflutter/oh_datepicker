@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oh_datepicker/src/render/view.dart';
+import 'package:oh_datepicker/src/core/view.dart';
+import 'package:oh_datepicker/src/extend/slider_header.dart';
+import 'package:oh_datepicker/src/utils.dart';
 
 class DayPicker extends StatefulWidget {
   DayPicker(
@@ -28,7 +30,7 @@ class _DayPickerState extends State<DayPicker> {
   void initState() {
     super.initState();
     _pageController = PageController(
-        initialPage: _getMonthIndex(
+        initialPage: getMonthIndex(
       widget.minDateTime,
       widget.initialDateTime ?? DateTime.now(),
     ));
@@ -42,13 +44,12 @@ class _DayPickerState extends State<DayPicker> {
 
   @override
   Widget build(BuildContext context) {
-    Widget extend = Container(
-      height: 40.0,
-      width: double.infinity,
-      child: Center(
-        child: Text("头部"),
-      ),
-    );
+    SliderHeader sliderHeader = new SliderHeader(
+        maxDateTime: widget.maxDateTime,
+        minDateTime: widget.minDateTime,
+        initialDateTime: widget.initialDateTime);
+
+    Widget sliderHeaderWidget = sliderHeader.build(context);
 
     Widget header = Container(
         height: widget.headerHeight,
@@ -58,26 +59,18 @@ class _DayPickerState extends State<DayPicker> {
     Widget content = Expanded(
       child: PageView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return View.month(_decodeByMonthIndex(widget.minDateTime, index));
+          return View.month(decodeByMonthIndex(widget.minDateTime, index));
         },
-        itemCount: _getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
+        itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
         controller: _pageController,
         scrollDirection: Axis.horizontal,
+        onPageChanged: (index) {
+          sliderHeader.scrollTo(decodeByMonthIndex(widget.minDateTime, index));
+        },
       ),
     );
     return Column(
-      children: <Widget>[extend, header, content],
+      children: <Widget>[sliderHeaderWidget, header, content],
     );
-  }
-
-  int _getMonthIndex(DateTime start, DateTime end) {
-    return (end.year * 12 + end.month) - (start.year * 12 + start.month);
-  }
-
-  DateTime _decodeByMonthIndex(DateTime start, int index) {
-    int _yearPlus = (index + 1) ~/ 12;
-    int _monthPlus = (index) % 12;
-
-    return DateTime(_yearPlus + start.year, _monthPlus + start.month);
   }
 }

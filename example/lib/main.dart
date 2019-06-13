@@ -13,19 +13,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-          appBar: AppBar(
-            title: Text("MyApp"),
+          body: Center(
+        child: Container(
+          height: 400.0,
+          width: double.infinity,
+          child: dp.DayPicker(
+            minDateTime: DateTime.parse("2019-06-01"),
+            maxDateTime: DateTime.parse("2020-12-01"),
+            initialDateTime: DateTime.parse("2019-06-01"),
+            headerHeight: 48.0,
           ),
-          body: Container(
-            height: 400.0,
-            padding: EdgeInsets.only(top: 20.0),
-            width: double.infinity,
-            child: dp.DayPicker(
-              minDateTime: DateTime.now(),
-              maxDateTime: DateTime.parse("2020-12-01"),
-              headerHeight: 48.0,
-            ),
-          )),
+        ),
+      )),
     );
   }
 }

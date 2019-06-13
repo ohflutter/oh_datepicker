@@ -5,3 +5,14 @@ DateTime getLastDayOfMonth(DateTime dateTime) {
   return DateTime(_month < 12 ? _year : ++_year, _month == 12 ? 1 : _month + 1)
       .subtract(Duration(days: 1));
 }
+
+int getMonthIndex(DateTime start, DateTime end) {
+  return (end.year * 12 + end.month) - (start.year * 12 + start.month);
+}
+
+DateTime decodeByMonthIndex(DateTime start, int index) {
+  int _yearPlus = (index + 1) ~/ 12;
+  int _monthPlus = (index) % 12;
+
+  return DateTime(_yearPlus + start.year, _monthPlus + start.month);
+}

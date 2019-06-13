@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:oh_datepicker/src/render/descriptor.dart';
+import 'package:oh_datepicker/src/core/descriptor.dart';
 
 class Render {
   final Canvas canvas;
