@@ -44,12 +44,10 @@ class _DayPickerState extends State<DayPicker> {
 
   @override
   Widget build(BuildContext context) {
-    SliderHeader sliderHeader = new SliderHeader(
+    SliderHeader sliderHeaderWidget = new SliderHeader(
         maxDateTime: widget.maxDateTime,
         minDateTime: widget.minDateTime,
         initialDateTime: widget.initialDateTime);
-
-    Widget sliderHeaderWidget = sliderHeader.build(context);
 
     Widget header = Container(
         height: widget.headerHeight,
@@ -64,13 +62,10 @@ class _DayPickerState extends State<DayPicker> {
         itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
         controller: _pageController,
         scrollDirection: Axis.horizontal,
-        onPageChanged: (index) {
-          sliderHeader.scrollTo(decodeByMonthIndex(widget.minDateTime, index));
-        },
       ),
     );
     return Column(
-      children: <Widget>[sliderHeaderWidget, header, content],
+      children: <Widget>[header, content],
     );
   }
 }
