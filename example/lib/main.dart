@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
             child: dp.DayPicker(
               minDateTime: DateTime.now(),
               maxDateTime: DateTime.parse("2020-12-01"),
-              headerHeight: 32.0,
+              headerHeight: 48.0,
             ),
           )),
     );

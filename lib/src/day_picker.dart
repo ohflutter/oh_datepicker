@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oh_datepicker/src/view/month_view.dart';
+import 'package:oh_datepicker/src/render/view.dart';
 
 class DayPicker extends StatefulWidget {
   DayPicker(
@@ -53,13 +53,12 @@ class _DayPickerState extends State<DayPicker> {
     Widget header = Container(
         height: widget.headerHeight,
         width: double.infinity,
-        child: MonthView.generateHeaderView());
+        child: View.header());
 
     Widget content = Expanded(
       child: PageView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return MonthView.generatePageView(
-              _decodeByMonthIndex(widget.minDateTime, index));
+          return View.month(_decodeByMonthIndex(widget.minDateTime, index));
         },
         itemCount: _getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
         controller: _pageController,
