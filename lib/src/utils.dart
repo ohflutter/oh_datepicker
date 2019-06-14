@@ -11,8 +11,6 @@ int getMonthIndex(DateTime start, DateTime end) {
 }
 
 DateTime decodeByMonthIndex(DateTime start, int index) {
-  int _yearPlus = (index + 1) ~/ 12;
-  int _monthPlus = (index) % 12;
-
-  return DateTime(_yearPlus + start.year, _monthPlus + start.month);
+  int months = start.year * 12 + index + start.month;
+  return DateTime((months / 12).floor(), months % 12);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oh_datepicker/src/core/view.dart';
-import 'package:oh_datepicker/src/extend/slider_header.dart';
+import 'package:oh_datepicker/src/extend/magic_view.dart';
 import 'package:oh_datepicker/src/utils.dart';
 
 class DayPicker extends StatefulWidget {
@@ -25,6 +25,7 @@ class DayPicker extends StatefulWidget {
 
 class _DayPickerState extends State<DayPicker> {
   PageController _pageController;
+  final GlobalKey<MagicViewState> key = GlobalKey();
 
   @override
   void initState() {
@@ -44,27 +45,36 @@ class _DayPickerState extends State<DayPicker> {
 
   @override
   Widget build(BuildContext context) {
-    SliderHeader sliderHeaderWidget = new SliderHeader(
-        maxDateTime: widget.maxDateTime,
-        minDateTime: widget.minDateTime,
-        initialDateTime: widget.initialDateTime);
-
     Widget header = Container(
         height: widget.headerHeight,
         width: double.infinity,
         child: View.header());
 
     Widget content = Expanded(
-      child: PageView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return View.month(decodeByMonthIndex(widget.minDateTime, index));
-          },
-          itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
-          controller: _pageController,
-          scrollDirection: Axis.horizontal),
-    );
+        child: PageView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        return View.month(decodeByMonthIndex(widget.minDateTime, index));
+      },
+      itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
+      controller: _pageController,
+      scrollDirection: Axis.horizontal,
+      onPageChanged: (index) {
+        DateTime nextDateTime = decodeByMonthIndex(widget.minDateTime, index);
+
+        key.currentState.next(nextDateTime.month.toString() + "月");
+      },
+    ));
     return Column(
-      children: <Widget>[sliderHeaderWidget, header, content],
+      children: <Widget>[
+        new MagicView(
+          key: key,
+          height: 40.0,
+          width: 40.0,
+          initialValue: widget.initialDateTime.month.toString() + "月",
+        ),
+        header,
+        content
+      ],
     );
   }
 }
