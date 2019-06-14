@@ -54,7 +54,7 @@ class _DayPickerState extends State<DayPicker> {
     Widget content = Expanded(
         child: PageView.builder(
       itemBuilder: (BuildContext context, int index) {
-        return View.month(decodeByMonthIndex(widget.minDateTime, index));
+        return View.month(decodeByMonthIndex(widget.minDateTime, index), context);
       },
       itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
       controller: _pageController,

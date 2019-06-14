@@ -15,13 +15,25 @@ class View {
     );
   }
 
-  static Widget month(DateTime day) {
-    return SizedBox.expand(
-      child: CustomPaint(
-        painter: _MonthPainter(
-            days: Model.month(day),
-            currentMonth: DateTime(day.year, day.month)),
+  static Widget month(DateTime day, BuildContext context) {
+    GlobalKey _key = GlobalKey();
+
+    return GestureDetector(
+      child: SizedBox.expand(
+        child: CustomPaint(
+          key: _key,
+          painter: _MonthPainter(
+              days: Model.month(day),
+              currentMonth: DateTime(day.year, day.month)),
+        ),
       ),
+      onTapUp: (TapUpDetails d) {
+        RenderBox box = _key.currentContext.findRenderObject();
+        // offset
+        Offset offset = box.localToGlobal(Offset.zero);
+        // size
+        Size size = box.size;
+      },
     );
   }
 }
@@ -32,9 +44,6 @@ class _MonthPainter extends CustomPainter {
   _MonthPainter({this.days, @required this.currentMonth});
   @override
   void paint(Canvas canvas, Size size) {
-    if (size.width == 0) {
-      print("元素宽度不能为0, 如果需要充满屏幕,请设置宽度为double.infinity");
-    }
     Render r = new Render(canvas, size);
     // background
     r.rect(r.defaultDescriptor, color: Colors.white70);
