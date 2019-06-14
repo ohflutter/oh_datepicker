@@ -3,8 +3,7 @@ import 'package:oh_datepicker/src/model/index.dart';
 
 import 'dart:ui' as ui;
 
-import 'package:oh_datepicker/src/core/render.dart';
-import 'package:oh_datepicker/src/core/descriptor.dart';
+import 'package:oh_datepicker/oh_datepicker.dart';
 import 'package:flutter/material.dart';
 
 class View {

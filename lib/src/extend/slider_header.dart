@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oh_datepicker/src/utils.dart';
+import 'package:oh_datepicker/src/extend/slider_core.dart';
+import 'package:oh_datepicker/src/extend/slider_notifier.dart';
 
-class SliderHeader {
+class SliderHeader extends StatelessWidget {
   final DateTime minDateTime, maxDateTime, initialDateTime;
   SliderHeader(
       {Key key,
@@ -10,16 +12,17 @@ class SliderHeader {
       @required this.initialDateTime});
 
   Widget build(BuildContext context) {
-    int yearCount = (getMonthIndex(minDateTime, maxDateTime) + 1) ~/ 12 + 1;
+    SliderNotifier<String> sliderNotifier = new SliderNotifier<String>();
+    Widget slider = new SliderCore(
+      notifier: sliderNotifier,
+      next: "12月",
+      current: "",
+    );
 
-    List<String> years = List.generate(yearCount, (index) {
-      return (minDateTime.year + index).toString() + "年";
-    }).toList();
-
-    List<String> months = List.generate(12, (index) {
-      return (index + 1).toString() + "月";
-    }).toList();
-
-    return null;
+    return Container(
+      height: 14.0,
+      width: 40.0,
+      child: slider,
+    );
   }
 }

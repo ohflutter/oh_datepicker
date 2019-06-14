@@ -65,7 +65,7 @@ class _DayPickerState extends State<DayPicker> {
       ),
     );
     return Column(
-      children: <Widget>[header, content],
+      children: <Widget>[sliderHeaderWidget, header, content],
     );
   }
 }
