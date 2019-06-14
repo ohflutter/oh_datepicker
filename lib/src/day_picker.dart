@@ -56,13 +56,12 @@ class _DayPickerState extends State<DayPicker> {
 
     Widget content = Expanded(
       child: PageView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return View.month(decodeByMonthIndex(widget.minDateTime, index));
-        },
-        itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
-        controller: _pageController,
-        scrollDirection: Axis.horizontal,
-      ),
+          itemBuilder: (BuildContext context, int index) {
+            return View.month(decodeByMonthIndex(widget.minDateTime, index));
+          },
+          itemCount: getMonthIndex(widget.minDateTime, widget.maxDateTime) + 1,
+          controller: _pageController,
+          scrollDirection: Axis.horizontal),
     );
     return Column(
       children: <Widget>[sliderHeaderWidget, header, content],
