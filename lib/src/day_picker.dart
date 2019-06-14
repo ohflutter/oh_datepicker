@@ -25,7 +25,8 @@ class DayPicker extends StatefulWidget {
 
 class _DayPickerState extends State<DayPicker> {
   PageController _pageController;
-  final GlobalKey<MagicViewState> key = GlobalKey();
+  final GlobalKey<MagicViewState> yareKey = GlobalKey();
+  final GlobalKey<MagicViewState> monthKey = GlobalKey();
 
   @override
   void initState() {
@@ -61,16 +62,30 @@ class _DayPickerState extends State<DayPicker> {
       onPageChanged: (index) {
         DateTime nextDateTime = decodeByMonthIndex(widget.minDateTime, index);
 
-        key.currentState.next(nextDateTime.month.toString() + "月");
+        yareKey.currentState.next(nextDateTime.year.toString() + "年");
+        monthKey.currentState.next(nextDateTime.month.toString() + "月");
       },
     ));
     return Column(
       children: <Widget>[
-        new MagicView(
-          key: key,
-          height: 40.0,
-          width: 40.0,
-          initialValue: widget.initialDateTime.month.toString() + "月",
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new MagicView(
+                key: yareKey,
+                height: 42.0,
+                width: 64.0,
+                initialValue: widget.initialDateTime.year.toString() + "年",
+              ),
+              new MagicView(
+                key: monthKey,
+                height: 42.0,
+                width: 40.0,
+                initialValue: widget.initialDateTime.month.toString() + "月",
+              )
+            ],
+          ),
         ),
         header,
         content
